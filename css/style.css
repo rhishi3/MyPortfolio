@@ -1,0 +1,176 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.bgnav {
+   background-color: #098;
+}
+.carousel-item{
+    width: 100%;
+    height: 100vh;
+    background: linear-gradient(rgba(0, 0, 0, 0.5),rgba(0, 0, 0, .5)),url('../images/bg-1.jpg');
+    background-size: cover;
+    background-position: center;
+    text-align: center;
+    color: #fff;
+}
+.carousel-item2{
+    background: linear-gradient(rgba(0, 0, 0, 0.5),rgba(0, 0, 0, .5)),url('../images/bg-2.jpg');
+    background-size: cover;
+    background-position: center;
+}
+.carousel-item3{
+    background: linear-gradient(rgba(0, 0, 0, 0.5),rgba(0, 0, 0, .5)),url('../images/bg-3.jpg');
+    background-size: cover;
+    background-position: center;
+}
+.carousel-item .wrap{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+.carousel-item p{
+    width: 70%;
+    margin: 10px auto;
+}
+#Menu nav ul li a{
+    color: #fff !important;
+    transition: 1s;
+}
+#Menu nav ul li a:hover {
+    color: #000 !important;
+}
+#Menu nav ul li .active{
+    color: #000 !important;
+}
+/* about css */
+.about-img {
+    /* height: 300px; */
+    width: 100%;
+}
+.contact .socal-icon a{
+    width: 50px;
+    height: 50px;
+    display: inline-block;
+    background-color: #fff;
+    box-shadow: 1px 1px 20px #d2cece;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 21px;
+    text-decoration: none;
+    margin-right: 8px;
+    transition: 1s;
+}
+.contact .socal-icon{
+    display: flex;
+    justify-content: start;
+}
+
+/* about css */
+.text{
+    color: rgb(114,74,195);
+}
+
+.about a{
+    background-color: #724AC3;
+    color: #fff;
+    border: none;
+}
+.about a:hover{
+    background-color: #ffc107;
+}
+.service .card{
+    box-shadow: 3px 3px 30px #a8a7a7;
+}
+footer{
+    background-color: #098;
+    color: #fff;
+}
+.circle-progress{
+    text-align: center;
+    position: relative;
+}
+.circle-progress span{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+.projects img{
+    height: 300px;
+    width: 100%;
+    object-fit: cover;
+}
+.service .card .card-img-top{
+    height: 250px;
+    overflow: hidden;
+}
+.service .card img{
+    object-fit: cover;
+    transition: .5s;
+    transform: scale(1);
+}
+.service .card .btn{
+    transition: .5s;
+}
+.service .card h5{
+    transition: .5s;
+}
+.service .card:hover img{
+    transform: scale(1.2);
+}
+.service .card:hover .btn{
+    background-color: #098;
+}
+.service .card:hover h5{
+    color: #098;
+}
+.carousel-control-next-icon{
+    background-color: #098;
+}
+.carousel-control-prev-icon{
+    background-color: #098;
+}
+.projects img{
+    filter: grayscale(100%);
+    transition: 0.5s;
+}
+.projects img:hover{
+    filter: grayscale(0%)
+}
+.contact .address:hover .socal-icon a{
+    background-color: #098;
+    color: #fff;
+}
+.contact .address h3{
+    transition: 1s;
+}
+.contact .address:hover h3{
+    color: #098;
+}
+@media screen and (max-width: 767px){
+    .carousel-item{
+        width: 100%;
+        height: 50vh;
+        background-color: #098;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+    }
+    .projects .btns{
+        display: block !important;
+    }
+    .carousel-item .wrap{
+        width: 100%;
+    }
+}
+@media screen and (max-width: 991px){
+    .carousel-item{
+        height: 50vh;
+    }
+}
