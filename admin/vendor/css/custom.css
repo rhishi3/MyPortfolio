@@ -1,0 +1,22 @@
+.card{
+   box-shadow: 0 .5rem 1rem rgba(0,0,0,.3) !important;
+}
+.edit_btn{
+    text-decoration: none;
+    font-size: 16px;
+    color: green;
+    margin-right: 10px;
+}
+.delete_btn{
+    text-decoration: none;
+    font-size: 16px;
+    color: red;
+}
+.edit_btn:hover{
+    color: green;
+    text-decoration: none;
+}
+.delete_btn:hover{
+    color: red;
+    text-decoration: none;
+}
