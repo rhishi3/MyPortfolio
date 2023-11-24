@@ -1,3 +1,6 @@
+<?php
+    include("component/database.php");
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -54,28 +57,33 @@
         <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
         <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
       </div>
+      <?php
+        $sql = 'SELECT * FROM `sliders`';
+        $result = mysqli_query($conn, $sql);
+      ?>
       <div class="carousel-inner">
-        <div class="carousel-item active">
-          <div class="wrap">
-              <h2 data-aos="fade-down">Slider Title</h2>
-              <p data-aos="zoom-in">Lorem ipsum dolor sit amet consectetur adipisicing, elit. Blanditiis deserunt sapiente iusto amet aliquam minima alias aut, ab, ipsa voluptas.</p>
-              <a data-aos="fade-up" href="#" class="btn btn-primary">Click Me</a>
-          </div>
-        </div>
-        <div class="carousel-item carousel-item2">
-          <div class="wrap">
-              <h2 data-aos="fade-down">Slider Title 2</h2>
-              <p data-aos="zoom-in">Lorem ipsum dolor sit amet consectetur adipisicing, elit. Blanditiis deserunt sapiente iusto amet aliquam minima alias aut, ab, ipsa voluptas.</p>
-              <a data-aos="fade-up" href="#" class="btn btn-primary">Click Me</a>
-          </div>
-        </div>
-        <div class="carousel-item carousel-item3">
-          <div class="wrap">
-              <h2 data-aos="fade-down">Slider Title 3</h2>
-              <p data-aos="zoom-in">Lorem ipsum dolor sit amet consectetur adipisicing, elit. Blanditiis deserunt sapiente iusto amet aliquam minima alias aut, ab, ipsa voluptas.</p>
-              <a data-aos="fade-up" href="#" class="btn btn-primary">Click Me</a>
-          </div>
-        </div>
+        <?php
+            $count = 0;
+            while ($row = mysqli_fetch_assoc($result)) {
+        ?>
+            <div class="carousel-item <?php if($count==0)
+                                            { 
+                                                echo "active";
+                                            }else
+                                            { 
+                                                echo "";
+                                            } ?> ">
+            <div class="wrap">
+                <h2 data-aos="fade-down"><?php echo $row['title'] ?></h2>
+                <p data-aos="zoom-in"><?php echo $row['sub_title'] ?></p>
+                <a data-aos="fade-up" href="<?php echo $row['btn_url'] ?>" class="btn btn-primary">Click Me</a>
+            </div>
+            </div>
+        <?php 
+            $count++;
+            } 
+        ?>
+
       </div>
       <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>

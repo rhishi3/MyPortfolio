@@ -35,27 +35,36 @@
                      <div class="col-12 col-md-10 col-lg-8">
                         <div class="card">
                            <div class="card-body">
-                           <?php
-                              if(isset($_POST["submit"])){
-                                 $title = $_POST['Title'];
-                                 $subtitle = $_POST['Sub_title'];
-                                 $url = $_POST['btn_url'];
-                                 $image_name = $_FILES['image']['name'];
-                                 $tmp_name= $_FILES['image']['tmp_name'];
-                                 $created_at = date("Y-m-d");
-                                 move_uploaded_file($tmp_name, "upload./".$image_name);
-                                 $sql = "INSERT INTO `sliders`(`title`, `sub_title`, `btn_url`,`image`,`created_at`) VALUES ('$title', '$subtitle',' $url','$image_name','$created_at')";
+                              <!-- read-operation -->
+                              <?php
+                                 $id = $_GET['id'];
+                                 $sql = "SELECT * FROM `sliders` WHERE id = $id";
                                  $result = mysqli_query($conn, $sql);
-                                 if($result){
-                                    $success = "Data Insert Successfull";
-                                 }else{
-                                    $error = "Data Not Inserted";
-                                 }
-                              }
+                                 $row = mysqli_fetch_assoc($result);
+                              ?>
+                              <!-- update-operation -->
+                              <?php
+                                 if(isset($_POST["update"])){
+                                    $title = $_POST['Title'];
+                                    $subtitle = $_POST['Sub_title'];
+                                    $url = $_POST['btn_url'];
+                                    $updated_at = date("Y-m-d");
+                                    $image_name = $_FILES['image']['name'];
+                                    $tmp_name= $_FILES['image']['tmp_name'];
+                                    $id = $_POST['id'];
 
-                           ?>
-                               <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post" enctype="multipart/form-data">
-                                 <h4 class="fs-4">Add Slider</h4>
+                                    $sql = "UPDATE `sliders` SET `title`='$title',`sub_title`='$subtitle',`btn_url`='$url',`updated_at`='$updated_at' WHERE id = $id";
+                                    $result2 = mysqli_query($conn, $sql);
+                                    if($result2){
+                                       header("Location: ../../slider.php");
+                                    }else{
+                                       $error = "Data Not Update";
+                                    }
+                                 }
+
+                              ?>
+                               <form action="" method="post" enctype="multipart/form-data">
+                                 <h4 class="fs-4">Edit Slider</h4>
                                  <?php
                                     if(isset($success)){
                                  ?>
@@ -77,23 +86,24 @@
                                     }
                                  ?>
                                  <hr>
+                                 <input type="hidden" name="id" value="<?php echo $row["id"] ?>">
                                 <div class="mb-3 mt-3">
                                   <label for="Title" class="form-label">Title:</label>
-                                  <input type="text" class="form-control shadow-none" id="Title" placeholder="Enter Title" name="Title">
+                                  <input type="text" class="form-control shadow-none" value="<?php echo $row["title"] ?>" id="Title" placeholder="Enter Title" name="Title">
                                 </div>
                                 <div class="mb-3">
                                   <label for="Sub_title" class="form-label">Subtitle:</label>
-                                  <input type="text" class="form-control shadow-none" id="Sub_title" placeholder="Enter Subtitle" name="Sub_title">
+                                  <input type="text" class="form-control shadow-none" value="<?php echo $row["sub_title"] ?>"  id="Sub_title" placeholder="Enter Subtitle" name="Sub_title">
                                 </div>
                                 <div class="mb-3">
                                   <label for="btn_url" class="form-label">Btn Url:</label>
-                                  <input type="url" class="form-control shadow-none" id="btn_url" placeholder="Enter URL" name="btn_url">
+                                  <input type="url" class="form-control shadow-none" value="<?php echo $row["btn_url"] ?>"   id="btn_url" placeholder="Enter URL" name="btn_url">
                                 </div>
                                 <div class="mb-3">
                                    <label for="image" class="form-label">Image:</label>
                                     <input type="file" class="form-control shadow-none" id="image" name="image">
                                 </div>
-                                <button type="submit" class="btn btn-primary" name="submit">Submit</button>
+                                <button type="submit" class="btn btn-primary" name="update">Update</button>
                                 <button type="reset" class="btn btn-warning">Reset</button>
                                 <a href="../../slider.php" class="btn btn-danger">Back</a>
                               </form> 

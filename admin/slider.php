@@ -25,18 +25,15 @@
             <div id="content">
                <!-- Topbar -->
                <?php include "component/header.php" ?>
+               <?php
+                  $sql = 'SELECT * FROM `sliders`';
+                  $result = mysqli_query($conn, $sql);
+               ?>
                <!-- End header -->
                <!-- Begin Page Content -->
                <div class="container-fluid">
                   <!-- Page Heading -->
                   <h5 class="mb-2 text-gray-800">Sliders</h5>
-                  <?php
-                     if(isset($_SESSION['success'])){
-                        echo $_SESSION['success'];
-                     }else{
-                        echo ' ';
-                     }
-                  ?>
                   <!-- DataTales Example -->
                   <div class="card shadow">
                      <div class="card-header py-3 d-flex justify-content-between">
@@ -69,22 +66,30 @@
                                  </tr>
                               </thead>
                               <tbody>
-                                 <tr>
-                                    <td>1</td>
+                                 <?php
+                                    $item = 1;
+                                    while($row = mysqli_fetch_assoc($result)){
+                                      ?>
+                                      <tr>
+                                    <td><?php echo $item++ ?></td>
                                     <td>
-                                       <img src="" alt="Img Not Found" width="120">
+                                       <img src="upload/<?php echo $row['image'] ?>" alt="Img Not Found" width="120">
                                     </td>
-                                    <td>Title 1</td>
-                                    <td>Lorem ipsum dolor sit amet consectetur adipisicing, elit. Explicabo, asperiores.</td>
+                                    <td><?php echo $row['title'] ?></td>
+                                    <td><?php echo substr_replace($row['sub_title'], "...", 50) ?></td>
                                     <td>
-                                       <a href="" class="edit_btn">
+                                       <a href="pages/slider/edit_slider.php?id=<?php echo $row['id'] ?>" class="edit_btn">
                                           <i class="fas fa-edit"></i>
                                        </a>
-                                       <a href="" class="delete_btn">
+                                       <a href="pages/slider/delete_slider.php?id=<?php echo $row['id'] ?>" class="delete_btn">
                                           <i class="fas fa-trash"></i>
                                        </a>
                                     </td>
                                  </tr>
+                                      <?php
+                                    }
+                                 ?>
+                                 
                               </tbody>
                            </table>
                         </div>
