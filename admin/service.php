@@ -25,6 +25,10 @@
             <div id="content">
                <!-- Topbar -->
                <?php include "component/header.php" ?>
+               <?php 
+                  $query = "SELECT * FROM `services`";
+                  $services = mysqli_query($conn, $query);
+               ?>
                <!-- End header -->
                <!-- Begin Page Content -->
                <div class="container-fluid">
@@ -34,8 +38,11 @@
                   <div class="card shadow">
                      <div class="card-header py-3 d-flex justify-content-between">
                         <div>
-                           <a href="insert.html">
-                              <h6 class="font-weight-bold text-primary mt-2">Add New</h6>
+                           <a href="add_service.php" class="btn btn-primary btn-xl">
+                              Add New
+                           </a>
+                           <a href="add_service_faqs.php" class="btn btn-primary btn-xl">
+                              Add Service FAQ
                            </a>
                         </div>
                         <div>
@@ -54,21 +61,24 @@
                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                               <thead>
                                  <tr>
-                                    <th>Sr.No</th>
+                                    <th>SL</th>
+                                    <th>Name</th>
+                                    <th>Description</th>
                                     <th>Image</th>
-                                    <th>Title</th>
-                                    <th>Sub Title</th>
                                     <th colspan="2">Action</th>
                                  </tr>
                               </thead>
                               <tbody>
+                                 <?php 
+                                    foreach($services as $key => $item) {
+                                 ?>
                                  <tr>
-                                    <td>1</td>
+                                    <td><?php echo ++$key; ?></td>
+                                    <td><?php echo $item['name']; ?></td>
+                                    <td><?php echo substr_replace($item['details'], '...', 50) ?></td>
                                     <td>
-                                       <img src="" alt="Img Not Found" width="120">
+                                       <img src="upload/<?php echo $item['image']?>" alt="Img Not Found" width="120">
                                     </td>
-                                    <td>Title 1</td>
-                                    <td>Lorem ipsum dolor sit amet consectetur adipisicing, elit. Explicabo, asperiores.</td>
                                     <td>
                                        <a href="" class="edit_btn">
                                           <i class="fas fa-edit"></i>
@@ -78,6 +88,9 @@
                                        </a>
                                     </td>
                                  </tr>
+                                 <?php 
+                                    }
+                                 ?>
                               </tbody>
                            </table>
                         </div>

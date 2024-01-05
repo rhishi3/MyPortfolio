@@ -38,7 +38,7 @@
                   <div class="card shadow">
                      <div class="card-header py-3 d-flex justify-content-between">
                         <div>
-                           <a href="pages/slider/add_slide.php">
+                           <a href="add_slide.php">
                               <h6 class="font-weight-bold text-primary mt-2">Add New</h6>
                            </a>
                         </div>
@@ -73,17 +73,20 @@
                                       <tr>
                                     <td><?php echo $item++ ?></td>
                                     <td>
-                                       <img src="upload/<?php echo $row['image'] ?>" alt="Img Not Found" width="120">
+                                       <img src="upload/<?php echo $row['image'] ?>" alt="Img Not Found" width="100">
                                     </td>
                                     <td><?php echo $row['title'] ?></td>
                                     <td><?php echo substr_replace($row['sub_title'], "...", 50) ?></td>
                                     <td>
-                                       <a href="pages/slider/edit_slider.php?id=<?php echo $row['id'] ?>" class="edit_btn">
+                                       <a href="edit_slider.php?id=<?php echo $row['id'] ?>" class="edit_btn">
                                           <i class="fas fa-edit"></i>
                                        </a>
-                                       <a href="pages/slider/delete_slider.php?id=<?php echo $row['id'] ?>" class="delete_btn">
-                                          <i class="fas fa-trash"></i>
-                                       </a>
+                                       <form method="POST" class="d-inline">
+                                          <input type="hidden" name="delete_id" value="<?= $row['id'] ?>">
+                                          <button type="submit" name="delete_data" class="delete_btn bg-white border-0">
+                                             <i class="fas fa-trash"></i>
+                                          </button>
+                                       </form>
                                     </td>
                                  </tr>
                                       <?php
@@ -127,3 +130,23 @@
       </script>
    </body>
 </html>
+
+<?php
+
+   if(isset($_POST['delete_data'])){
+      $id = $_POST['delete_id'];
+
+      $sql = "SELECT * FROM `sliders` WHERE id = '$id'";
+      $query = mysqli_query($conn, $sql);
+      $row = mysqli_fetch_assoc($query);
+      $destination = "upload/". $row["image"];
+
+      $delete_sql = "DELETE FROM `sliders` WHERE id = $id";
+      $result = mysqli_query($conn, $delete_sql);
+      if($result){
+         unlink($destination);
+         header("Location: slider.php");
+      }
+   }
+
+?>
