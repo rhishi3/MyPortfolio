@@ -14,6 +14,8 @@
     <a class="nav-link" href="slider.php"> <span>Sliders</span></a>
     <a class="nav-link" href="about.php"> <span>About</span></a>
     <a class="nav-link" href="service.php"> <span>Sercices</span></a>
+    <a class="nav-link" href="skill.php"> <span>Skills</span></a>
+    <a class="nav-link" href="project.php"> <span>Projects</span></a>
     </li>
     <!-- Divider -->
     <hr class="sidebar-divider">
