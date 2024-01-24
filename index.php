@@ -8,6 +8,9 @@
 
     $sql_service = "SELECT * FROM `services`";
     $query_service = mysqli_query($conn, $sql_service);
+
+    $project_category = "SELECT * FROM `project_catagory`";
+    $query_category = mysqli_query($conn, $project_category);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -219,30 +222,23 @@
              <div class="row">
                  <div class="col-12 btns mt-4 d-flex justify-content-center" id="buttons">
                      <button class="btn btn-secondary mx-2 mt-2" data-filter="">All</button>
-                     <button class="btn btn-primary mx-2 mt-2" data-filter=".cat">Web Design</button>
-                     <button class="btn btn-success mx-2 mt-2" data-filter=".fish">Web Development</button>
-                     <button class="btn btn-info mx-2 mt-2" data-filter=".fruit">Seo</button>
+                    <?php foreach($query_category as $item){ ?>
+                        <button class="btn btn-primary mx-2 mt-2" data-filter=".item<?= $item['id'] ?>"><?= $item['category_name'] ?></button>
+                    <?php } ?>
                  </div>
              </div>
              <div class="row" id="items">
-                 <div class="col-12 col-md-4 mt-4 item cat">
-                     <img src="images/cat.jpg" alt="img" class="img-fluid">
-                 </div>
-                 <div class="col-12 col-md-4 mt-4 item cat">
-                     <img src="images/cat1.jpg" alt="img" class="img-fluid">
-                 </div>
-                 <div class="col-12 col-md-4 mt-4 item fish">
-                     <img src="images/fish.jpg" alt="img" class="img-fluid">
-                 </div>
-                 <div class="col-12 col-md-4 mt-4 item fish">
-                     <img src="images/fish1.jpg" alt="img" class="img-fluid">
-                 </div>
-                 <div class="col-12 col-md-4 mt-4 item fruit">
-                     <img src="images/fruit.jpg" alt="img" class="img-fluid">
-                 </div>
-                 <div class="col-12 col-md-4 mt-4 item fruit">
-                     <img src="images/fruit1.jpg" alt="img" class="img-fluid">
-                 </div>
+                <?php foreach($query_category as $item){ ?>
+                    <?php 
+                        $id = $item['id'];
+                        $sql = "SELECT * FROM `projocts` WHERE `category_id` = '$id'";
+                        $query_projets = mysqli_query($conn, $sql);
+                        foreach($query_projets as $item2){
+                    ?>
+                    <div class="col-12 col-md-4 mt-4 item item<?= $item['id'] ?>">
+                        <img src="admin/upload/<?= $item2['projects_image'] ?>" alt="img" class="img-fluid">
+                    </div>
+                <?php }} ?>
              </div>
          </div>
      </section>
