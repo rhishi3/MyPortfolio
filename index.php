@@ -1,5 +1,13 @@
 <?php
     include("component/database.php");
+    ob_start();
+
+    $sql_about = "SELECT * FROM `about`";
+    $query_about = mysqli_query($conn, $sql_about);
+    $result2 = mysqli_fetch_assoc($query_about);
+
+    $sql_service = "SELECT * FROM `services`";
+    $query_service = mysqli_query($conn, $sql_service);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -17,7 +25,9 @@
     <section id="Menu">
         <nav class="navbar navbar-expand-lg bgnav navbar-dark fixed-top">
             <div class="container">
-                <a class="navbar-brand text-white" href="#">NAFISA NABA</a>
+                <a class="navbar-brand text-white" href="#">
+                    <img src="admin/upload/about/<?= $result2['logo'] ?>" alt="" class="img-fluid" width="40">
+                </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
@@ -106,11 +116,11 @@
             </div>
             <div class="row">
                 <div class="col-12 col-md-5 animate__animated animate__bounce">
-                    <img src="images/about.jpg" alt="Img Not Found" class="img-fluid animate__bounceOutUp">
+                    <img src="admin/upload/about/<?= $result2['about_image'] ?>" alt="Img Not Found" class="img-fluid animate__bounceOutUp">
                 </div>
                 <div class="col-12 col-md-7 align-self-center mt-3 mt-md-0">
-                    <h2 class="fw-bold">Rhishi Kesh Bhowmik</h2>
-                    <p class="lead">Lorem ipsum dolor sit amet, consectetur, adipisicing elit. Soluta quia perspiciatis saepe at, eligendi praesentium explicabo facilis quae excepturi nihil temporibus earum ullam dolores consequuntur. Rerum a odio quos, omnis quae, ea quam. Laborum, facilis, nemo ratione rerum commodi cumque corrupti nesciunt sed unde placeat distinctio totam soluta neque similique.</p>
+                    <h2 class="fw-bold"><?= $result2['auth_name'] ?></h2>
+                    <p class="lead"><?= $result2['auth_des'] ?></p>
                     <a href="" class="btn btn-info btn-lg">Hire Me!</a>
                 </div>
             </div>
@@ -127,42 +137,20 @@
                 </div>
             </div>
             <div class="row">
+                <?php foreach($query_service as $item){ ?>
                 <div class="col-12 col-md-6 col-lg-4 mt-4" data-aos="zoom-in">
                     <div class="card">
                         <div class="card-img-top">
-                            <img src="images/service-1.jpg" alt="Img Not Found" class="card-img-top">
+                            <img src="admin/upload/<?= $item['image'] ?>" alt="Img Not Found" class="card-img-top">
                         </div>
                         <div class="card-body">
-                            <h5 class="card-title">Web Design</h5>
-                            <p class="card-text">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Odio inventore tenetur adipisci odit itaque, nobis voluptates?</p>
+                            <h5 class="card-title"><?= $item['name'] ?></h5>
+                            <p class="card-text"><?= substr_replace($item['details'], '..', 40) ?></p>
                             <button href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Details</button>
                         </div>
                     </div>
                 </div>
-                <div class="col-12 col-md-6 col-lg-4 mt-4" data-aos="zoom-in">
-                    <div class="card">
-                        <div class="card-img-top">
-                            <img src="images/service-2.jpg" alt="Img Not Found" class="card-img-top">
-                        </div>
-                        <div class="card-body">
-                            <h5 class="card-title">Web Development</h5>
-                            <p class="card-text">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Odio inventore tenetur adipisci odit itaque, nobis voluptates?</p>
-                            <a href="#" class="btn btn-primary" target="_blank">Details</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-md-6 col-lg-4 mt-4" data-aos="zoom-in">
-                    <div class="card">
-                        <div class="card-img-top">
-                            <img src="images/service-3.jpg" alt="Img Not Found" class="card-img-top">
-                        </div>
-                        <div class="card-body">
-                            <h5 class="card-title">SEO</h5>
-                            <p class="card-text">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Odio inventore tenetur adipisci odit itaque, nobis voluptates?</p>
-                            <a href="#" class="btn btn-primary">Details</a>
-                        </div>
-                    </div>
-                </div>
+                <?php } ?>
             </div>
         </div>
     </section>
@@ -269,7 +257,7 @@
             </div>
              <div class="row">
                  <div class="col-12 col-md-8 mt-4">
-                     <form action="#" method="POST" class="shadow-lg p-4">
+                     <form action="" method="POST" class="shadow-lg p-4">
                          <div class="row">
                              <div class="col-12 col-sm-6 mt-2">
                                 <label for="name" class="form-label">Name</label>
@@ -277,7 +265,7 @@
                              </div>
                              <div class="col-12 col-sm-6 mt-2">
                                 <label for="email" class="form-label">Email</label>
-                                 <input type="email" class="form-control shadow-none" placeholder="Email" id="email" name="name">
+                                 <input type="email" class="form-control shadow-none" placeholder="Email" id="email" name="email">
                              </div>
                          </div>
                          <div class="row">
@@ -294,7 +282,7 @@
                          </div>
                          <div class="row">
                              <div class="col-12">
-                                 <button type="submit" class="form-control text-uppercase bg-info btn mt-4">Send</button>
+                                 <button type="submit" class="form-control text-uppercase bg-info btn mt-4" name="submit">Send</button>
                              </div>
                          </div>
                      </form>
@@ -443,3 +431,16 @@
     </script>
 </body>
 </html>
+<?php
+    if(isset($_POST['submit'])){
+        $name = $_POST['name'];
+        $email = $_POST['email'];
+        $Subject = $_POST['Subject'];
+        $message = $_POST['message'];
+        $sql = "INSERT INTO `contact`(`name`, `email`, `subject`, `massage`) VALUES ('$name','$email','$Subject','$message')";
+        $query = mysqli_query($conn, $sql);
+        if($query){
+            header("location: success.php");
+        }
+    }
+?>

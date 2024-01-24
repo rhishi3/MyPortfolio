@@ -25,10 +25,82 @@
             <div id="content">
                <!-- Topbar -->
                <?php include "component/header.php" ?>
+               <?php
+                  $sql = "SELECT * FROM `contact`";
+                  $result = mysqli_query($conn, $sql);
+               ?>
                <!-- End header -->
                <!-- Begin Page Content -->
                <div class="container-fluid">
-                  
+                  <div class="row">
+                     <div class="col-12">
+                        <div class="card">
+                           <div class="card-body">
+                              <div class="table-responsive">
+                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                       <tr>
+                                          <th>Sr.No</th>
+                                          <th>Name</th>
+                                          <th>Email</th>
+                                          <th>Subject</th>
+                                          <th>Massage</th>
+                                          <th colspan="2">Action</th>
+                                       </tr>
+                                    </thead>
+                                    <tbody>
+                                       <?php $count = 1 ?>
+                                       <?php foreach($result as $item){ ?>
+                                          <tr>
+                                             <td><?= $count++ ?></td>
+                                             <td>
+                                                <p><?= $item['name'] ?></p>
+                                             </td>
+                                             <td>
+                                                <p><?= $item['email'] ?></p>
+                                             </td>
+                                             <td>
+                                                <p><?= $item['subject'] ?></p>
+                                             </td>
+                                             <td>
+                                                <p><?= $item['massage'] ?></p>
+                                             </td>
+                                             <td>
+                                                <a href="#test<?= $item['id'] ?>" class="text-info" data-bs-toggle="modal" style="text-decoration: none">
+                                                   <i class="far fa-eye"></i>
+                                                </a>
+                                                <a href="mailto:<?= $item['email'] ?>" class="text-success ms-2" style="text-decoration: none">
+                                                   <i class="fas fa-envelope"></i>
+                                                </a>
+                                                <a href="" class="text-danger ms-2">
+                                                   <i class="fas fa-trash"></i>
+                                                </a>
+                                             </td>
+                                          </tr>
+                                          <div class="modal fade" id="test<?= $item['id'] ?>">
+                                             <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                   <div class="modal-header">
+                                                   <h5 class="modal-title" id="exampleModalLabel"><?= $item['name'] ?></h5>
+                                                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                   </div>
+                                                   <div class="modal-body">
+                                                      <p><b>Name:</b> <?= $item['name'] ?></p>
+                                                      <p><b>E-mail:</b> <?= $item['email'] ?></p>
+                                                      <p><b>Subject:</b> <?= $item['subject'] ?></p>
+                                                      <p><b>Message:</b> <?= $item['massage'] ?></p>
+                                                   </div>
+                                                </div>
+                                             </div>
+                                          </div>
+                                       <?php } ?>
+                                    </tbody>
+                                 </table>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
                </div>
                <!-- /.container-fluid -->
             </div>

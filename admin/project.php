@@ -26,8 +26,8 @@
                <!-- Topbar -->
                <?php include "component/header.php" ?>
                <?php
-                //   $sql = 'SELECT * FROM `sliders`';
-                //   $result = mysqli_query($conn, $sql);
+                  $sql = 'SELECT * FROM `projocts` JOIN `project_catagory` ON projocts.category_id = project_catagory.id';
+                  $result = mysqli_query($conn, $sql);
                ?>
                <!-- End header -->
                <!-- Begin Page Content -->
@@ -63,13 +63,31 @@
                                  <tr>
                                     <th>Sr.No</th>
                                     <th>Image</th>
-                                    <th>Title</th>
-                                    <th>Sub Title</th>
+                                    <th>Category Name</th>
                                     <th colspan="2">Action</th>
                                  </tr>
                               </thead>
                               <tbody>
-                                 
+                                 <?php $count = 1 ?>
+                                 <?php foreach($result as $item){ ?>
+                                 <tr>
+                                    <td><?= $count++ ?></td>
+                                    <td>
+                                       <img src="upload/<?= $item['projects_image'] ?>" alt="" width="80">
+                                    </td>
+                                    <td>
+                                       <p><?= $item['category_name'] ?></p>
+                                    </td>
+                                    <td>
+                                       <a href="" class="edit_btn">
+                                          <i class="fas fa-edit"></i>
+                                       </a>
+                                       <a href="" class="delete_btn">
+                                          <i class="fas fa-trash"></i>
+                                       </a>
+                                    </td>
+                                 </tr>
+                                 <?php } ?>
                               </tbody>
                            </table>
                         </div>
